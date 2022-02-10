@@ -35,3 +35,18 @@
         ]
     }
 }
+
+{
+    "id": "5fb21aae-251a-11e9-ab14-d663bd873d93",
+    "jsonrpc": "2.0",
+    "method": "SetVdisk",
+    "params": {
+        "Name": "changed_name",
+        "TierInfoList": [
+            {
+                "Tier": "SATA_HDD",
+                "Capacity": 1000
+            }
+        ]
+    }
+}

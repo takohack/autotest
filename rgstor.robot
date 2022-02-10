@@ -1,11 +1,11 @@
 *** Settings ***
-Library           SSHLibrary
-Library           RequestsLibrary
+Library           SSHLibrary       #ssh连接测试机器
+Library           RequestsLibrary  #主要用到了里面的to json
 Library           Collections
-Library           String
+Library           String           #主要用了里面的字符串切割
 
 *** Variables ***
-${host}           172.24.21.7    # 集群VIP
+${host}           172.24.21.7    # 集群VIP 用于ssh登录
 ${vmdir}          /home/cjw/vm
 ${user}           root    #user
 ${passwd}         ruijie1688    # password
