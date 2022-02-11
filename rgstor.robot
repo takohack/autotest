@@ -1,6 +1,5 @@
 *** Settings ***
 Library           SSHLibrary    #ssh连接测试机器
-Library           RequestsLibrary    #主要用到了里面的to json
 Library           Collections
 Library           String    #主要用了里面的字符串切割
 
@@ -26,7 +25,6 @@ rgstorsetup
 rgstorteardown
     Close All Connections
 
-
 add_vdisk_parse_vdiskid
     #从调用它的上下文中获取输入 提取其中的json部分 并取出它的vdiskid
     ${output}    Read Until    "jsonrpc": "2.0", "
@@ -34,7 +32,8 @@ add_vdisk_parse_vdiskid
     should contain    ${output}    result    #确认调用成功 就不用在测试中判断
     ${output}    Get Substring    ${output}    9    -2
     Read Until Prompt
-    ${ret_result}    to json    ${output}
+    #${ret_result}    to json    ${output}
+    ${ret_result}=    evaluate    json.loads('''${output}''')    json
     ${id}    get from dictionary    ${ret_result}    VdiskId
     [Return]    ${id}
 
@@ -44,6 +43,7 @@ add_volume_parse_volid
     should contain    ${output}    result    #确认调用成功 就不用在测试中判断
     ${output}    Get Substring    ${output}    9    -2
     Read Until Prompt
-    ${ret_result}    to json    ${output}
+    #${ret_result}    to json    ${output}
+    ${ret_result}=    evaluate    json.loads('''${output}''')    json
     ${id}    get from dictionary    ${ret_result}    VolumeId
     [Return]    ${id}
