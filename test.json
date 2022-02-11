@@ -50,3 +50,12 @@
         ]
     }
 }
+{
+    "jsonrpc": "2.0",
+    "method": "DeletePool",
+    "id": "5fb21aae-251a-11e9-ab14-d663bd873d93",
+    "params": {
+        "Force":True,
+        "AuthCode": ""
+    }
+}

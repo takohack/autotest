@@ -8,7 +8,10 @@ XXX创建pool
     log    TODO
 
 XXX删除pool
-    log    TODO
+    log    删除Pool
+    write    curl -i -X DELETE -d '{"jsonrpc":"2.0","method":"DeletePool","id":"5fb21aae-251a-11e9-ab14-d663bd873d93","params":{"Force":True,"AuthCode":"29d6c305-9eac-4a09-bf0f-5944e4a555b3"}}' http://127.0.0.1:9300/p_api/v1/pools/0
+    ${output}    Read Until Prompt
+    should contain    ${output}    result
 
 获取单个pool信息
     write    curl -i -H "Content-Type: application/json" -X POST -d '{"jsonrpc":"2.0","method": "AddPool","id":"5fb21aae-251a-11e9-ab14-d663bd873d93","params":{"Name":"pool1","ConstructType":1,"Description":"","NodeNum":'1',"SasHotspareStrategy":"mid","SataHotspareStrategy":"mid","SsdHotspareStrategy":"mid","NodeInfoList":[{"NodeId":${node1myid},"DiskList":[${node1disk1},${node1disk2}]}]}}' http://127.0.0.1:9300/p_api/v1/pools

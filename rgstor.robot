@@ -1,8 +1,8 @@
 *** Settings ***
-Library           SSHLibrary       #ssh连接测试机器
-Library           RequestsLibrary  #主要用到了里面的to json
+Library           SSHLibrary    #ssh连接测试机器
+Library           RequestsLibrary    #主要用到了里面的to json
 Library           Collections
-Library           String           #主要用了里面的字符串切割
+Library           String    #主要用了里面的字符串切割
 
 *** Variables ***
 ${host}           172.24.21.7    # 集群VIP 用于ssh登录
@@ -33,7 +33,7 @@ ${iscsi_target}    iqn.2020-11.io.ruijie:autotest
 rgstorsetup
     Open Connection    ${host}    alias=conf    port=${port}
     login    ${user}    ${passwd}
-    Set Client Configuration    prompt=#
+    Set Client Configuration    prompt=#    #定义 Read Until的停止位置 这里每次调用都会以#结尾
     Set Client Configuration    timeout=60
 
 rgstorteardown
@@ -47,10 +47,20 @@ add_pool0
     should contain    ${output}    result
 
 add_vdisk_parse_vdiskid
+    #从调用它的上下文中获取输入 提取其中的json部分 并取出它的vdiskid 这里默认创建vdisk会成功(是个bug 如果不成功会卡住)
     ${output}    Read Until    "result":
     ${output}    Read Until    }[
     ${output}    Get Substring    ${output}    \    -2
     Read Until Prompt
     ${ret_result}    to json    ${output}
     ${id}    get from dictionary    ${ret_result}    VdiskId
+    [Return]    ${id}
+
+add_volume_parse_volid
+    ${output}    Read Until    "result":
+    ${output}    Read Until    }[
+    ${output}    Get Substring    ${output}    \    -2
+    Read Until Prompt
+    ${ret_result}    to json    ${output}
+    ${id}    get from dictionary    ${ret_result}    VolumeId
     [Return]    ${id}
