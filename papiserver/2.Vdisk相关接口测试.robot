@@ -28,11 +28,7 @@ Resource          ../rgstor.robot
     should contain    ${output}    error
 
 删除vdisk
-    #log    创建vdisk用例已覆盖
-    log    创建vdisk
-    ${vdisk_name}    Generate Random String    4
-    write    curl -i -H "Content-Type: application/json" -X POST -d '{ "id": "5fb21aae-251a-11e9-ab14-d663bd873d93", "jsonrpc": "2.0", "method": "AddVdisk", "params": { "PoolId": 0, "Name": "${vdisk_name}", "TierInfoList": [ { "Tier": "SATA_HDD", "Capacity": 1000, "EcType": "RAID1_1D0B" } ] } }' http://127.0.0.1:9300/p_api/v1/vdisks
-    log    创建Vdisk成功
+    log    创建vdisk用例已覆盖
 
 根据id获取vdisk信息
     log    创建vdisk用例已覆盖
@@ -42,8 +38,8 @@ Resource          ../rgstor.robot
 
 获取所有vdisk信息
     log    创建2个vdisk
-    ${vdisk_name1}    Generate Random String    4
-    write    curl -i -H "Content-Type: application/json" -X POST -d '{ "id": "5fb21aae-251a-11e9-ab14-d663bd873d93", "jsonrpc": "2.0", "method": "AddVdisk", "params": { "PoolId": 0, "Name": "${vdisk_name1}", "TierInfoList": [ { "Tier": "SATA_HDD", "Capacity": 1000, "EcType": "RAID1_1D0B" } ] } }' http://127.0.0.1:9300/p_api/v1/vdisks
+    ${vdisk_name}    Generate Random String    4
+    write    curl -i -H "Content-Type: application/json" -X POST -d '{ "id": "5fb21aae-251a-11e9-ab14-d663bd873d93", "jsonrpc": "2.0", "method": "AddVdisk", "params": { "PoolId": 0, "Name": "${vdisk_name}", "TierInfoList": [ { "Tier": "SATA_HDD", "Capacity": 1000, "EcType": "RAID1_1D0B" } ] } }' http://127.0.0.1:9300/p_api/v1/vdisks
     log    创建Vdisk成功
     ${vdisk1}    add_vdisk_parse_vdiskid
     ${vdisk_name2}    Generate Random String    4
@@ -54,7 +50,7 @@ Resource          ../rgstor.robot
     write    curl -i -X GET http://127.0.0.1:9300/p_api/v1/pools/0/vdisks?offset=${vdisk1}\\&count=2
     ${output}    Read Until Prompt
     should contain    ${output}    result
-    should contain    ${output}    ${vdisk_name1}
+    should contain    ${output}    ${vdisk_name}
     should contain    ${output}    ${vdisk_name2}    #输出结果能正确包含创建的两个vdisk
     log    删除vdisk1、2
     write    curl -i -X DELETE \ http://127.0.0.1:9300/p_api/v1/vdisks/${vdisk1}?poolid=0
