@@ -15,7 +15,7 @@ XXX删除pool
     log    TODO
 
 获取单个pool信息
-    write    curl -i -H "Content-Type: application/json" -X POST -d '{"jsonrpc":"2.0","method": "AddPool","id":"5fb21aae-251a-11e9-ab14-d663bd873d93","params":{"Name":"pool1","ConstructType":1,"Description":"","NodeNum":'1',"SasHotspareStrategy":"mid","SataHotspareStrategy":"mid","SsdHotspareStrategy":"mid","NodeInfoList":[{"NodeId":${node1myid},"DiskList":[${node1disk1},${node1disk2}]}]}}' http://127.0.0.1:9300/p_api/v1/pools
+    write    curl -i -H "Content-Type: application/json" -X POST -d '{"jsonrpc":"2.0","method": "AddPool","id":"5fb21aae-251a-11e9-ab14-d663bd873d93","params":{"Name":"pool0","ConstructType":1,"Description":"","NodeNum":'1',"SasHotspareStrategy":"mid","SataHotspareStrategy":"mid","SsdHotspareStrategy":"mid","NodeInfoList":[{"NodeId":${node1myid},"DiskList":[${node1disk1},${node1disk2}]}]}}' http://127.0.0.1:9300/p_api/v1/pools
     ${output}    Read Until Prompt
     write    curl -i -X GET http://127.0.0.1:9300/p_api/v1/pools/0
     ${output}    Read Until Prompt
