@@ -47,19 +47,21 @@ add_pool0
     should contain    ${output}    result
 
 add_vdisk_parse_vdiskid
-    #从调用它的上下文中获取输入 提取其中的json部分 并取出它的vdiskid 这里默认创建vdisk会成功(是个bug 如果不成功会卡住)
-    ${output}    Read Until    "result":
+    #从调用它的上下文中获取输入 提取其中的json部分 并取出它的vdiskid
+    ${output}    Read Until    "jsonrpc": "2.0", "
     ${output}    Read Until    }[
-    ${output}    Get Substring    ${output}    \    -2
+    should contain    ${output}    result    #确认调用成功 就不用在测试中判断
+    ${output}    Get Substring    ${output}    9    -2
     Read Until Prompt
     ${ret_result}    to json    ${output}
     ${id}    get from dictionary    ${ret_result}    VdiskId
     [Return]    ${id}
 
 add_volume_parse_volid
-    ${output}    Read Until    "result":
+    ${output}    Read Until    "jsonrpc": "2.0", "
     ${output}    Read Until    }[
-    ${output}    Get Substring    ${output}    \    -2
+    should contain    ${output}    result    #确认调用成功 就不用在测试中判断
+    ${output}    Get Substring    ${output}    9    -2
     Read Until Prompt
     ${ret_result}    to json    ${output}
     ${id}    get from dictionary    ${ret_result}    VolumeId
